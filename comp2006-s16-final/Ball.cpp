@@ -13,13 +13,10 @@ Ball::Ball(Game* game)
 	setFillColor(sf::Color::White);
 	// position to the center of the window
 	setPosition(windowSize.x / 2 - RADIUS, windowSize.y / 2 - RADIUS);
-	moveDir = sf::Vector2f(0, 0.5);
+	moveDir = sf::Vector2f(0, getSpeed());
 }
 
 void Ball::update(float delta) {
-	//float speed = 0.175f * delta;
-	//float speed = getSpeed();
-
 	move(moveDir.x * delta, moveDir.y * delta);
 	game->outOfBounds(this);
 }
@@ -33,5 +30,5 @@ sf::Vector2f& Ball::getMoveDir() {
 }
 
 float Ball::getSpeed() {
-	return 0.3f;
+	return 0.5f;
 }

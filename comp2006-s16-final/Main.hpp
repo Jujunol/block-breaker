@@ -5,17 +5,10 @@
 #include <vector>
 #include <string>
 
-//class IGameObject {
-//public:
-//	virtual ~IGameObject() {}
-//	virtual void update(float) = 0;
-//	virtual void draw(sf::RenderWindow& window) {}
-//};
-
 // class prototypes
 class Game;
 
-class Paddle : public sf::RectangleShape/*, public IGameObject*/ {
+class Paddle : public sf::RectangleShape {
 private:
 	Game* game;
 	sf::Vector2u windowSize;
@@ -37,6 +30,14 @@ public:
 	void setMoveDir(sf::Vector2f&);
 	sf::Vector2f& getMoveDir();
 	float getSpeed();
+};
+
+class Block : public sf::RectangleShape {
+private:
+	
+public:
+	Block(float x, float y);
+	static std::vector<Block *>& getBlockList();
 };
 
 class Game {
