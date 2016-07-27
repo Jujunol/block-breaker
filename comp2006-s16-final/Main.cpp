@@ -1,16 +1,32 @@
 #include "Main.hpp"
 
+//class MyPaddle : public sf::RectangleShape {
+//private:
+//	sf::Texture texture;
+//public:
+//	MyPaddle(sf::Vector2u& windowSize) : RectangleShape(sf::Vector2f(100, 10)) {
+//		if (!texture.loadFromFile("paddle-texture.png")) {
+//			std::cout << "Couldn't load paddle texture" << std::endl;
+//		}
+//
+//		setTexture(&texture);
+//		setPosition((windowSize.x / 2 - 100 / 2), (windowSize.y - 20));
+//	}
+//};
+
 int main() {
 	sf::RenderWindow window(sf::VideoMode(600, 600), "My Project with SFML");
 	sf::Clock clock;
 	Game game(window);
+
+	//MyPaddle myPaddle(window.getSize());
 
 	sf::Font arial;
 	arial.loadFromFile("arial.ttf");
 
 	sf::Text frameDisplay("Frame Rate: ", arial, 16);
 	frameDisplay.setColor(sf::Color::Red);
-	
+
 	window.setFramerateLimit(64);
 
 	while (window.isOpen()) {
@@ -41,6 +57,7 @@ int main() {
 		window.clear();
 		window.draw(frameDisplay);
 		game.drawObjects();
+		//window.draw(myPaddle);
 		window.display();
 	}
 

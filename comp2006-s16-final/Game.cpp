@@ -1,16 +1,17 @@
 #include "Main.hpp"
 
-const float  PI_F = 3.14159265358979f;
+#define BLOCK_WIDTH 30
+#define BLOCK_HEIGHT 15
 
 Game::Game(sf::RenderWindow& window) {
-	//makeBall();
 	this->window = &window;
 	paddle = Paddle(this);
 	ball = Ball(this);
 
-	
-	/*Block oneBlock(10, 10);
-	Block secBlock(10, 25);*/
+	for (int i = 0; i < 50; i++) {
+		Block block((i % 10) * (BLOCK_WIDTH * 2) + 15, (i % 3) * (BLOCK_HEIGHT * 2.5) + 25);
+		blockList.push_back(block);
+	}
 }
 
 void Game::update(float delta) {
@@ -24,32 +25,7 @@ void Game::update(float delta) {
 	}
 
 	if (ball.getGlobalBounds().intersects(paddle.getGlobalBounds())) {
-		// calculate the center of the ball, highest diameter
-		float ballCenter = ball.getPosition().x + ball.getGlobalBounds().width / 2;
-
-		// find the point of intersection relative to the paddle
-		float poi = ballCenter - paddle.getPosition().x;
-
-		// error prevention for different collisions
-		if (poi < 0) poi = 0;
-		else if (poi > paddle.getGlobalBounds().width) poi = paddle.getGlobalBounds().width;
-
-		// find the angle to launch the ball in Radians
-		float angle = PI_F * (paddle.getGlobalBounds().width - poi) / paddle.getGlobalBounds().width;
-
-		// find the x and y movement factors
-		float x = cosf(angle) * ball.getSpeed();
-		float y = sinf(angle) * ball.getSpeed() * -1;
-
-		// print it out for debugging
-		std::cout << "Ball Center: " << ballCenter << std::endl
-			<< "POI: " << poi << std::endl
-			<< "Angle: " << angle << std::endl
-			<< "Move X: " << x << std::endl
-			<< "Move Y: " << y << std::endl << std::endl;
-
-		// set the movement vector
-		ball.setMoveDir(sf::Vector2f(x, y));
+		ball.bounceOff(paddle);
 	}
 	else if (ball.getPosition().y <= 0) {
 		sf::Vector2f moveDir = ball.getMoveDir();
@@ -61,31 +37,25 @@ void Game::update(float delta) {
 		moveDir.x *= -1;
 		ball.setMoveDir(moveDir);
 	}
-}
-void Game::makeBall() {
 
-	Block thridBlock(50, 50);
-	Block thridBlock1(100, 50);
-	Block thridBlock2(150, 50);
-
+	for (Block& block : blockList) {
+		if (block.visible && ball.getGlobalBounds().intersects(block.getGlobalBounds())) {
+			block.visible = false;
+			ball.bounceOff(block);
+		}
+	}
 }
+
 void Game::drawObjects() {
 	// draw shapes
 	window->draw(paddle);
 	window->draw(ball);
 
-	/*std::vector<Block *> ptr;
-	ptr.push_back(&thridBlock);
-	ptr.push_back(&thridBlock1);
-	ptr.push_back(&thridBlock2);*/
-	
-	Block oneBlock(50.0f, 50.0f);
-	//window->draw(oneBlock);
-
 	//std::cout << std::string(10, '-') << std::endl;
-	for (Block* block : Block::getBlockList()) {
-		std::cout << block->getPosition().x << " - " << block->getPosition().y << std::endl;
-		window->draw(*block);
+	for (Block block : blockList) {
+		//std::cout << block.getPosition().x << " - " << block.getPosition().y << std::endl;
+		if (block.visible) 
+			window->draw(block);
 	}
 	//std::cout << std::string(10, '-') << std::endl;
 }

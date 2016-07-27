@@ -10,7 +10,11 @@ Paddle::Paddle(Game* game)
 	this->game = game;
 	this->windowSize = game->getWindow()->getSize();
 
-	setFillColor(sf::Color::Blue);
+	if (!texture.loadFromFile("paddle-texture.png")) {
+		std::cout << "Couldn't load paddle texture" << std::endl;
+	}
+
+	setTexture(&texture);
 	// position in center of window on x axis
 	setPosition((windowSize.x / 2 - WIDTH / 2), (windowSize.y - 20));
 }

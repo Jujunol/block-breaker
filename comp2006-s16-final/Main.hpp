@@ -11,6 +11,7 @@ class Game;
 class Paddle : public sf::RectangleShape {
 private:
 	Game* game;
+	sf::Texture texture;
 	sf::Vector2u windowSize;
 public:
 	Paddle();
@@ -27,22 +28,23 @@ public:
 	Ball();
 	Ball(Game*);
 	void update(float);
+	void bounceOff(sf::Shape&);
 	void setMoveDir(sf::Vector2f&);
 	sf::Vector2f& getMoveDir();
 	float getSpeed();
 };
 
 class Block : public sf::RectangleShape {
-private:
-	
 public:
+	bool visible = true;
+
 	Block(float x, float y);
-	static std::vector<Block *>& getBlockList();
 };
 
 class Game {
 private:
 	sf::RenderWindow* window;
+	std::vector<Block> blockList;
 	Paddle paddle;
 	Ball ball;
 public:

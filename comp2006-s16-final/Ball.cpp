@@ -3,6 +3,8 @@
 #define RADIUS 10
 #define EDGES 50U
 
+const float  PI_F = 3.14159265358979f;
+
 Ball::Ball() : CircleShape(RADIUS)  {}
 
 Ball::Ball(Game* game)
@@ -19,6 +21,38 @@ Ball::Ball(Game* game)
 void Ball::update(float delta) {
 	move(moveDir.x * delta, moveDir.y * delta);
 	game->outOfBounds(this);
+}
+
+void Ball::bounceOff(sf::Shape& shape) {
+	float shapeWidth = shape.getGlobalBounds().width;
+
+	// calculate the center of the ball, highest diameter
+	float ballCenter = getPosition().x + getGlobalBounds().width / 2;
+
+	// find the point of intersection relative to the paddle
+	float poi = ballCenter - shape.getPosition().x;
+
+	// error prevention for different collisions
+	if (poi < 0) poi = 0;
+	else if (poi > shapeWidth * 0.90) poi = shapeWidth * 0.90;
+
+	// find the angle to launch the ball in Radians
+	float angle = PI_F * (shapeWidth - poi) / shapeWidth;
+
+	// find the x and y movement factors
+	float x = cosf(angle) * getSpeed();
+	float y = sinf(angle) * getSpeed() * -1;
+
+	// print it out for debugging
+	std::cout << "Ball Center: " << ballCenter << std::endl
+		<< "POI: " << poi << std::endl
+		<< "Angle: " << angle << std::endl
+		<< "Move X: " << x << std::endl
+		<< "Move Y: " << y << std::endl << std::endl;
+
+	// set the movement vector
+	moveDir.x = x;
+	moveDir.y = y;
 }
 
 void Ball::setMoveDir(sf::Vector2f& moveDir) {
