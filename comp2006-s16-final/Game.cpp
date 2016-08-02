@@ -1,7 +1,6 @@
 #include "Main.hpp"
 
-#define BLOCK_WIDTH 30
-#define BLOCK_HEIGHT 15
+static const int BLOCK_WIDTH = 30, BLOCK_HEIGHT = 15;
 
 Game::Game(sf::RenderWindow& window) {
 	this->window = &window;

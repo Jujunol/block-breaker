@@ -1,7 +1,6 @@
 #include "Main.hpp"
 
-#define WIDTH 100
-#define HEIGHT 10
+static const int WIDTH = 100, HEIGHT = 10;
 
 Paddle::Paddle() : RectangleShape(sf::Vector2f(WIDTH, HEIGHT)) {}
 
@@ -10,13 +9,13 @@ Paddle::Paddle(Game* game)
 	this->game = game;
 	this->windowSize = game->getWindow()->getSize();
 
-	if (!texture.loadFromFile("paddle-texture.png")) {
+	/*if (!texture.loadFromFile("paddle-texture.png")) {
 		std::cout << "Couldn't load paddle texture" << std::endl;
-	}
+	}*/
 
-	setTexture(&texture);
 	// position in center of window on x axis
 	setPosition((windowSize.x / 2 - WIDTH / 2), (windowSize.y - 20));
+	//setTexture(&texture);
 }
 
 void Paddle::update(float delta) {
