@@ -27,8 +27,10 @@ void Game::update(float delta) {
 		//window->close();
 	}
 
+	bool canBallFlip = true;
 	if (ball->getGlobalBounds().intersects(paddle->getGlobalBounds())) {
 		ball->bounceOff(*paddle);
+		canBallFlip = false;
 	}
 	else if (ball->getPosition().y <= 0) {
 		sf::Vector2f moveDir = ball->getMoveDir();
@@ -45,8 +47,12 @@ void Game::update(float delta) {
 		if (block.visible && ball->getGlobalBounds().intersects(block.getGlobalBounds())) {
 			block.visible = false;
 			ball->bounceOff(block);
+			canBallFlip = false;
 		}
 	}
+
+	if (canBallFlip)
+		ball->reset();
 }
 
 void Game::drawObjects() {

@@ -27,6 +27,10 @@ void Ball::update(float delta) {
 }
 
 void Ball::bounceOff(sf::Shape& shape) {
+	if (!canFlip) {
+		return;
+	}
+
 	float shapeWidth = shape.getGlobalBounds().width;
 
 	// calculate the center of the ball, highest diameter
@@ -39,6 +43,11 @@ void Ball::bounceOff(sf::Shape& shape) {
 	float minFactor = shapeWidth * 0.1;
 	float maxFactor = shapeWidth - minFactor;
 
+	// flip
+	float flip = -(moveDir.y / abs(moveDir.y));
+	/*if (flipClock.getElapsedTime().asMilliseconds() < 500)
+		flip = moveDir.y;*/
+
 	// error prevention for different collisions
 	if (poi < minFactor) poi = minFactor;
 	else if (poi > maxFactor) poi = maxFactor;
@@ -48,7 +57,7 @@ void Ball::bounceOff(sf::Shape& shape) {
 
 	// find the x and y movement factors
 	float x = cosf(angle) * getSpeed();
-	float y = sinf(angle) * getSpeed() * -(moveDir.y / abs(moveDir.y));
+	float y = sinf(angle) * getSpeed() * flip;
 
 	// print it out for debugging
 	std::cout << "Ball Center: " << ballCenter << std::endl
@@ -60,6 +69,11 @@ void Ball::bounceOff(sf::Shape& shape) {
 	// set the movement vector
 	moveDir.x = x;
 	moveDir.y = y;
+	canFlip = false;
+}
+
+void Ball::reset() {
+	canFlip = true;
 }
 
 void Ball::setMoveDir(sf::Vector2f& moveDir) {

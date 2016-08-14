@@ -25,11 +25,13 @@ private:
 	sf::Texture texture;
 	sf::Vector2u windowSize;
 	sf::Vector2f moveDir;
+	bool canFlip = true;
 public:
 	Ball();
 	Ball(Game*);
 	void update(float);
 	void bounceOff(sf::Shape&);
+	void reset();
 	void setMoveDir(sf::Vector2f&);
 	sf::Vector2f& getMoveDir();
 	float getSpeed();
