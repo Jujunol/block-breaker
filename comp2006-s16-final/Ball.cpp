@@ -35,16 +35,20 @@ void Ball::bounceOff(sf::Shape& shape) {
 	// find the point of intersection relative to the paddle
 	float poi = ballCenter - shape.getPosition().x;
 
+	// find min and max factors
+	float minFactor = shapeWidth * 0.1;
+	float maxFactor = shapeWidth - minFactor;
+
 	// error prevention for different collisions
-	if (poi < 0) poi = 0;
-	else if (poi > shapeWidth * 0.90) poi = shapeWidth * 0.90;
+	if (poi < minFactor) poi = minFactor;
+	else if (poi > maxFactor) poi = maxFactor;
 
 	// find the angle to launch the ball in Radians
 	float angle = PI_F * (shapeWidth - poi) / shapeWidth;
 
 	// find the x and y movement factors
 	float x = cosf(angle) * getSpeed();
-	float y = sinf(angle) * getSpeed() * -1;
+	float y = sinf(angle) * getSpeed() * -(moveDir.y / abs(moveDir.y));
 
 	// print it out for debugging
 	std::cout << "Ball Center: " << ballCenter << std::endl

@@ -5,8 +5,6 @@ int main() {
 	sf::Clock clock;
 	Game game(window);
 
-	//MyPaddle myPaddle(window.getSize());
-
 	sf::Font arial;
 	arial.loadFromFile("arial.ttf");
 
@@ -14,7 +12,6 @@ int main() {
 	frameDisplay.setColor(sf::Color::Red);
 
 	window.setFramerateLimit(64);
-	
 
 	while (window.isOpen()) {
 		sf::Event event;
