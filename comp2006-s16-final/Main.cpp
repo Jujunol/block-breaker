@@ -5,6 +5,8 @@ int main() {
 	sf::Clock clock;
 	Game game(window);
 
+	std::cout << window.getSettings().antialiasingLevel << std::endl;
+
 	sf::Font arial;
 	arial.loadFromFile("arial.ttf");
 

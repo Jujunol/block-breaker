@@ -1,7 +1,6 @@
 #include "Main.hpp"
 
-#define WIDTH 30
-#define HEIGHT 15
+const int WIDTH = 30, HEIGHT = 15;
 
 sf::Texture Block::texture;
 

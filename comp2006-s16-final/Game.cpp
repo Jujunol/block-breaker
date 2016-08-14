@@ -60,13 +60,10 @@ void Game::drawObjects() {
 	window->draw(*paddle);
 	window->draw(*ball);
 
-	//std::cout << std::string(10, '-') << std::endl;
 	for (Block block : blockList) {
-		//std::cout << block.getPosition().x << " - " << block.getPosition().y << std::endl;
 		if (block.visible) 
 			window->draw(block);
 	}
-	//std::cout << std::string(10, '-') << std::endl;
 }
 
 void Game::outOfBounds(sf::Shape* shape) {
