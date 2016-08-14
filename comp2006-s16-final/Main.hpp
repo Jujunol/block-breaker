@@ -11,7 +11,7 @@ class Game;
 class Paddle : public sf::RectangleShape {
 private:
 	Game* game;
-	//sf::Texture texture;
+	sf::Texture texture;
 	sf::Vector2u windowSize;
 public:
 	Paddle();
@@ -22,7 +22,7 @@ public:
 class Ball : public sf::CircleShape {
 private:
 	Game* game;
-	//sf::Texture texture;
+	sf::Texture texture;
 	sf::Vector2u windowSize;
 	sf::Vector2f moveDir;
 public:
@@ -46,8 +46,8 @@ class Game {
 private:
 	sf::RenderWindow* window;
 	std::vector<Block> blockList;
-	Paddle paddle;
-	Ball ball;
+	Paddle* paddle;
+	Ball* ball;
 public:
 	Game(sf::RenderWindow&);
 	void update(float);

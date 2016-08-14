@@ -10,11 +10,11 @@ Ball::Ball(Game* game)
 	this->game = game;
 	this->windowSize = game->getWindow()->getSize();
 
-	/*if (!texture.loadFromFile("paddle-texture.png")) {
+	if (!texture.loadFromFile("ball-texture.png")) {
 		std::cout << "file not found!" << std::endl;
-	}*/
+	}
 
-	//setTexture(&texture);
+	setTexture(&texture);
 	setFillColor(sf::Color::White);
 	// position to the center of the window
 	setPosition(windowSize.x / 2 - RADIUS, windowSize.y / 2 - RADIUS);

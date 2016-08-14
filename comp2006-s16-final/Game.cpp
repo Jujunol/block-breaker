@@ -4,8 +4,8 @@ static const int BLOCK_WIDTH = 30, BLOCK_HEIGHT = 15;
 
 Game::Game(sf::RenderWindow& window) {
 	this->window = &window;
-	paddle = Paddle(this);
-	ball = Ball(this);
+	paddle = new Paddle(this);
+	ball = new Ball(this);
 
 	for (int i = 0; i < 50; i++) {
 		Block block((i % 10) * (BLOCK_WIDTH * 2) + 15, (i % 3) * (BLOCK_HEIGHT * 2.5) + 25);
@@ -14,41 +14,41 @@ Game::Game(sf::RenderWindow& window) {
 }
 
 void Game::update(float delta) {
-	paddle.update(delta);
-	ball.update(delta);
+	paddle->update(delta);
+	ball->update(delta);
 
 	// check if game over (ie. ball is below the paddle)
-	if (window->getSize().y - (ball.getPosition().y + ball.getLocalBounds().height) <= 10) {
+	if (window->getSize().y - (ball->getPosition().y + ball->getLocalBounds().height) <= 10) {
 		std::cout << "Game over!" << std::endl;
 		//window->close();
 	}
 
-	if (ball.getGlobalBounds().intersects(paddle.getGlobalBounds())) {
-		ball.bounceOff(paddle);
+	if (ball->getGlobalBounds().intersects(paddle->getGlobalBounds())) {
+		ball->bounceOff(*paddle);
 	}
-	else if (ball.getPosition().y <= 0) {
-		sf::Vector2f moveDir = ball.getMoveDir();
+	else if (ball->getPosition().y <= 0) {
+		sf::Vector2f moveDir = ball->getMoveDir();
 		moveDir.y *= -1;
-		ball.setMoveDir(moveDir);
+		ball->setMoveDir(moveDir);
 	}
-	else if (ball.getPosition().x <= 0 || ball.getPosition().x + ball.getGlobalBounds().width >= window->getSize().x) {
-		sf::Vector2f moveDir = ball.getMoveDir();
+	else if (ball->getPosition().x <= 0 || ball->getPosition().x + ball->getGlobalBounds().width >= window->getSize().x) {
+		sf::Vector2f moveDir = ball->getMoveDir();
 		moveDir.x *= -1;
-		ball.setMoveDir(moveDir);
+		ball->setMoveDir(moveDir);
 	}
 
 	for (Block& block : blockList) {
-		if (block.visible && ball.getGlobalBounds().intersects(block.getGlobalBounds())) {
+		if (block.visible && ball->getGlobalBounds().intersects(block.getGlobalBounds())) {
 			block.visible = false;
-			ball.bounceOff(block);
+			ball->bounceOff(block);
 		}
 	}
 }
 
 void Game::drawObjects() {
 	// draw shapes
-	window->draw(paddle);
-	window->draw(ball);
+	window->draw(*paddle);
+	window->draw(*ball);
 
 	//std::cout << std::string(10, '-') << std::endl;
 	for (Block block : blockList) {
