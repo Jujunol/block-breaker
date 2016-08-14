@@ -7,6 +7,10 @@ Game::Game(sf::RenderWindow& window) {
 	paddle = new Paddle(this);
 	ball = new Ball(this);
 
+	if (!Block::texture.loadFromFile("block-texture.png")) {
+		std::cout << "Could not load texture for blocks!" << std::endl;
+	}
+
 	for (int i = 0; i < 50; i++) {
 		Block block((i % 10) * (BLOCK_WIDTH * 2) + 15, (i % 3) * (BLOCK_HEIGHT * 2.5) + 25);
 		blockList.push_back(block);

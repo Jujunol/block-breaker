@@ -43,6 +43,9 @@
     <Image Include="ball-texture.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="block-texture.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="sfml-graphics-d-2.dll" />

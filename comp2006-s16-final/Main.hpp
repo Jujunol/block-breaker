@@ -36,7 +36,9 @@ public:
 };
 
 class Block : public sf::RectangleShape {
+private:
 public:
+	static sf::Texture texture;
 	bool visible = true;
 
 	Block(float x, float y);

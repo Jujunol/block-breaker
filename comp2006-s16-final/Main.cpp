@@ -14,6 +14,7 @@ int main() {
 	frameDisplay.setColor(sf::Color::Red);
 
 	window.setFramerateLimit(64);
+	
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -40,7 +41,7 @@ int main() {
 		clock.restart();
 
 		// render everything onto the screen
-		window.clear();
+		window.clear(sf::Color::White);
 		window.draw(frameDisplay);
 		game.drawObjects();
 		//window.draw(myPaddle);

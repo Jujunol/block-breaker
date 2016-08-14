@@ -17,7 +17,6 @@ Paddle::Paddle(Game* game)
 
 	// position in center of window on x axis
 	setPosition((windowSize.x / 2 - WIDTH / 2), (windowSize.y - 20));
-	//
 }
 
 void Paddle::update(float delta) {
