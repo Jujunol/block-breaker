@@ -20,7 +20,7 @@ public:
 class Menu {
 private:
 	sf::RenderWindow* window;
-	Button buttons[5];
+	//Button buttons[5];
 public:
 	Menu(sf::RenderWindow&);
 	~Menu();

@@ -24,7 +24,7 @@ void Game::update(float delta) {
 	// check if game over (ie. ball is below the paddle)
 	if (window->getSize().y - (ball->getPosition().y + ball->getLocalBounds().height) <= 10) {
 		std::cout << "Game over!" << std::endl;
-		//window->close();
+		window->close();
 	}
 
 	bool canBallFlip = true;
